@@ -42,9 +42,9 @@ const searchInput = document.getElementById("searchInput");
 
 const render = (list) => {
   grid.innerHTML = list.map(({ name, image, description, labels }) => `
-    <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 shadow-lg flex flex-col">
-      <img src="${image}" alt="${name}" class="h-44 w-full object-contain bg-white p-2">
-      <div class="p-4 flex flex-col flex-grow">
+    <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 shadow-lg flex flex-col sm:flex-row">
+      <img src="${image}" alt="${name}" class="h-44 w-full sm:h-auto sm:w-1/3 object-contain bg-white p-2">
+      <div class="p-4 flex flex-col flex-grow sm:w-2/3">
         <h3 class="text-lg font-bold mb-1">${name}</h3>
         <p class="text-slate-400 text-sm mb-4 flex-grow">${description}</p>
         <div class="flex flex-wrap gap-2">

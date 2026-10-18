@@ -23,9 +23,9 @@ const loadCharacters = async () => {
   const data = await res.json();
   pageLabel.textContent = `Page ${page}`;
   grid.innerHTML = data.results.map(({ id, name, image, species, status, location }) => `
-    <div onclick="openDetail(${id})" class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 cursor-pointer flex flex-col">
-      <img src="${image}" alt="${name}" class="h-52 w-full object-cover">
-      <div class="p-4 flex flex-col flex-grow">
+    <div onclick="openDetail(${id})" class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 cursor-pointer flex flex-col sm:flex-row">
+      <img src="${image}" alt="${name}" class="h-52 w-full sm:h-auto sm:w-1/3 object-cover">
+      <div class="p-4 flex flex-col flex-grow sm:w-2/3">
         <h3 class="text-lg font-bold mb-1">${name}</h3>
         <p class="text-slate-400 text-sm mb-4">${location.name}</p>
         <div class="flex gap-2 mt-auto">
