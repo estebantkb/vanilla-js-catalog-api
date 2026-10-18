@@ -2,28 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page 1 - Catalog</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-900 text-white p-6 max-w-5xl mx-auto">
+<body class="bg-slate-900 text-white p-6 max-w-6xl mx-auto">
 
-  <!-- 1. Navegación entre páginas -->
-  <nav class="mb-6 flex gap-4 border-b border-gray-700 pb-4">
-    <a href="index.html" class="text-blue-400 font-bold">Page 1: Local Catalog</a>
-    <a href="api.html" class="text-gray-400 hover:text-white">Page 2: Rick & Morty API</a>
+  <nav class="mb-6 flex gap-4 border-b border-slate-700 pb-4">
+    <a href="index.html" class="text-blue-400 font-bold">1. Product Catalog</a>
+    <a href="api.html" class="text-slate-400 hover:text-white">2. Rick & Morty API</a>
   </nav>
 
-  <!-- 2. Barra de búsqueda -->
-  <input 
-    id="searchInput" 
-    type="text" 
-    placeholder="Search product..." 
-    class="w-full p-3 mb-6 rounded bg-gray-800 border border-gray-700"
-  />
+  <input
+    id="searchInput"
+    type="text"
+    placeholder="Search product..."
+    class="w-full p-3 mb-6 rounded-lg bg-slate-800 border border-slate-700"
+  >
 
-  <!-- 3. Contenedor de 3 columnas responsivas -->
-  <!-- grid-cols-1 (celular) | md:grid-cols-2 (tablet) | lg:grid-cols-3 (PC) -->
-  <div id="grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  <div id="grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
   <script src="js/catalog.js"></script>
 </body>

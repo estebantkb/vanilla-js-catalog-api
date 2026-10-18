@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rick & Morty API</title>
+  <title>Page 2 - Rick & Morty API</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-900 text-white p-6 max-w-6xl mx-auto">
@@ -13,15 +13,13 @@
     <a href="api.html" class="text-blue-400 font-bold">2. Rick & Morty API</a>
   </nav>
 
-  <div class="mb-6">
-    <input 
-      id="searchInput" 
-      type="text" 
-      placeholder="Search character (4-second delay)..." 
-      class="w-full p-3 rounded-lg bg-slate-800 border border-slate-700 focus:outline-none focus:border-blue-500"
-    >
-    <p id="statusMsg" class="text-amber-400 text-sm mt-2 hidden">Waiting 4 seconds to search...</p>
-  </div>
+  <input
+    id="searchInput"
+    type="text"
+    placeholder="Search character (4-second delay)..."
+    class="w-full p-3 mb-2 rounded-lg bg-slate-800 border border-slate-700"
+  >
+  <p id="statusMsg" class="text-amber-400 text-sm mb-6 hidden">Waiting 4 seconds to search...</p>
 
   <div id="grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
@@ -31,7 +29,7 @@
     <button id="nextBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg">Next</button>
   </div>
 
-  <div id="modal" class="fixed inset-0 bg-black/80 hidden flex items-center justify-center p-4 z-50">
+  <div id="modal" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
     <div class="bg-slate-800 p-6 rounded-xl max-w-md w-full border border-slate-600">
       <div id="modalContent"></div>
       <button id="closeBtn" class="mt-6 w-full py-2 bg-red-600 hover:bg-red-500 rounded-lg font-bold">
