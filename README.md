@@ -16,3 +16,19 @@ Web application built with **Vanilla JavaScript (ECMAScript 6+)**, **HTML5**, an
   3. Single character & origin/location detail (`/api/character/{id}` & location endpoint)
 - **4-Second Debounced Search:** Delays API requests by 4000ms after the user stops typing.
 - **Interactive Detail Modal (Pop-up):** Displays extended information with a "Go Back" navigation action.
+
+## Responsive validation
+
+The two pages were tested locally with Playwright at these viewport sizes:
+
+- Desktop: `1000x800`
+- Mobile: `375x800`
+
+Validation results:
+
+- Product cards display the image beside the details on desktop.
+- Product cards stack the image above the details on mobile.
+- The local catalog search returns the matching product.
+- The API page loads characters and keeps the same responsive layout.
+
+The screenshots for this validation can be attached to the Pull Request as visual evidence.
