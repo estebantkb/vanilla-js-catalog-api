@@ -1,37 +1,22 @@
 # Playwright validation
 
-I checked both pages in the browser on desktop and mobile sizes.
+The catalog has two small automated checks:
 
-## Start the pages
+- The six product cards appear on `index.html`.
+- Searching for `Synthetic Oil` leaves one matching product.
 
-From the project folder:
+## Run the tests
+
+Install the dependencies:
 
 ```bash
-python3 -m http.server 8000
+npm install
 ```
 
-Then open:
+Run the tests:
 
-```text
-http://127.0.0.1:8000/index.html
-http://127.0.0.1:8000/api.html
+```bash
+npm run test:e2e
 ```
 
-## Checks
-
-I tested the pages at `1000x800` and `375x800`.
-
-### Catalog
-
-- Confirmed that the six product cards appear.
-- Searched for `Synthetic Oil`.
-- Confirmed that the result is `Synthetic Oil 15W-40`.
-- Confirmed that the mobile view has no horizontal scrolling.
-
-### API page
-
-- Confirmed that the character cards load.
-- Searched for a character and waited for the four-second delay.
-- Opened a character to check the detail window.
-- Closed the detail window with `Go Back`.
-- Confirmed that the mobile view has no horizontal scrolling.
+The tests start a local server on port `8000` automatically.
