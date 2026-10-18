@@ -19,18 +19,6 @@ Web application built with **Vanilla JavaScript (ECMAScript 6+)**, **HTML5**, an
 
 ## Responsive validation
 
-The detailed Playwright/MCP test procedure and evidence checklist are in
-[`docs/playwright-validation.md`](docs/playwright-validation.md). That document
-records the browser tool, URLs, viewport sizes, actions, expected results, and
-the location where screenshots should be saved. A screenshot by itself shows
-the visual result; the checklist and the recorded test result show what was
-actually verified.
-
-The validation covers:
-
-- Desktop (`1000x800`) and mobile (`375x800`) viewports.
-- Rendering of the six local product cards.
-- Rendering and navigation of the Rick & Morty API cards.
-- Local catalog search for `Synthetic Oil`.
-- The API search debounce and detail modal.
-- Absence of horizontal overflow on mobile.
+The responsive checks were done with Playwright in the browser. The steps are
+described in
+[`docs/playwright-validation.md`](docs/playwright-validation.md).
