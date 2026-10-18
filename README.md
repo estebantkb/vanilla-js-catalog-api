@@ -19,26 +19,18 @@ Web application built with **Vanilla JavaScript (ECMAScript 6+)**, **HTML5**, an
 
 ## Responsive validation
 
-The UI was validated locally with a Playwright browser session at these viewport sizes:
+The detailed Playwright/MCP test procedure and evidence checklist are in
+[`docs/playwright-validation.md`](docs/playwright-validation.md). That document
+records the browser tool, URLs, viewport sizes, actions, expected results, and
+the location where screenshots should be saved. A screenshot by itself shows
+the visual result; the checklist and the recorded test result show what was
+actually verified.
 
-- Desktop: `1000x800`
-- Mobile: `375x800`
+The validation covers:
 
-Validation procedure:
-
-1. Open `index.html` and confirm that all six local product cards render.
-2. Open `api.html` and confirm that the first page of characters renders.
-3. Set the viewport to `1000x800` and verify that each card places the image beside its details.
-4. Set the viewport to `375x800` and verify that each card stacks the image above its details without horizontal overflow.
-5. Search for `Synthetic Oil` in the local catalog and confirm that the matching card is returned.
-6. Confirm that the API page keeps the responsive layout while displaying character data.
-
-Results:
-
-- The six local product cards render correctly.
-- The API page loads the character cards correctly.
-- Product and character cards are horizontal on desktop.
-- Product and character cards stack vertically on mobile.
-- The local catalog search returns `Synthetic Oil 15W-40`.
-- No horizontal overflow was observed at the mobile viewport.
-
+- Desktop (`1000x800`) and mobile (`375x800`) viewports.
+- Rendering of the six local product cards.
+- Rendering and navigation of the Rick & Morty API cards.
+- Local catalog search for `Synthetic Oil`.
+- The API search debounce and detail modal.
+- Absence of horizontal overflow on mobile.
