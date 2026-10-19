@@ -1,24 +1,103 @@
 # Vanilla JS Product Catalog & REST API Consumer
 
-## Overview
-Web application built with **Vanilla JavaScript (ECMAScript 6+)**, **HTML5**, and **Tailwind CSS** implementing DOM manipulation, array methods, asynchronous API consumption, and responsive 3-column card layouts.
+Web application with two pages:
+
+- A local product catalog built with Vanilla JavaScript and Tailwind CSS.
+- A Rick and Morty character explorer that consumes an external REST API.
+
+The local catalog stores its products in PostgreSQL and loads them through the
+Spring Boot backend.
 
 ## Features
-### Page 1: Local Product Catalog (`index.html`)
-- **Responsive Grid:** 3-column layout on desktop, 2 on tablet, 1 on mobile.
-- **Product Cards:** Detailed descriptions and category/status labels.
-- **Instant Search:** Real-time filtering using ES6 `.filter()`, `.map()`, and object destructuring.
 
-### Page 2: Rick & Morty API Explorer (`api.html`)
-- **3 REST Endpoints Consumed:**
-  1. Paginated character directory (`/api/character?page={n}`)
-  2. Server-side filtered search (`/api/character/?name={query}`)
-  3. Single character & origin/location detail (`/api/character/{id}` & location endpoint)
-- **4-Second Debounced Search:** Delays API requests by 4000ms after the user stops typing.
-- **Interactive Detail Modal (Pop-up):** Displays extended information with a "Go Back" navigation action.
+### Local product catalog
 
-## Responsive validation
+- Responsive product grid.
+- Product search by name or description.
+- Product data loaded from the local backend.
+- PostgreSQL persistence through Spring Data JPA.
 
-The responsive checks were done with Playwright in the browser. The steps are
-described in
+### Rick and Morty API explorer
+
+- Paginated character list.
+- Search with a four-second delay.
+- Character and location details in a modal.
+
+## Project structure
+
+```text
+.
+├── backend/catalog-backend/
+│   └── src/main/
+│       ├── java/com/example/catalog_backend/
+│       │   ├── controller/
+│       │   ├── model/
+│       │   ├── repository/
+│       │   └── service/
+│       └── resources/
+├── css/
+├── img/
+├── js/
+├── tests/
+├── api.html
+└── index.html
+```
+
+## Local catalog flow
+
+```text
+index.html
+→ js/catalog.js
+→ ProductController
+→ ProductService
+→ ProductRepository
+→ PostgreSQL
+```
+
+The frontend requests the products from Spring Boot. The backend handles the
+search and reads the data from the `product` table.
+
+## Catalog endpoints
+
+```text
+GET http://localhost:8080/api/products
+GET http://localhost:8080/api/products?search=oil
+```
+
+The first endpoint returns all products. The second searches by product name
+or description.
+
+## Rick and Morty endpoints
+
+The second page consumes these external endpoints:
+
+```text
+GET https://rickandmortyapi.com/api/character?page={n}
+GET https://rickandmortyapi.com/api/character/?name={query}
+GET https://rickandmortyapi.com/api/character/{id}
+```
+
+The location details are requested from the location URL returned by the
+character endpoint.
+
+## Local setup
+
+PostgreSQL runs in the `catalog-postgres` Podman container. Spring Boot uses
+the `catalog` database on port `5432` and runs on port `8080`.
+
+The frontend is served locally on port `8000`:
+
+```text
+http://localhost:8000/index.html
+http://localhost:8000/api.html
+```
+
+## Playwright validation
+
+The catalog was checked in the browser with two small tests:
+
+- Six product cards are displayed.
+- Searching for `Synthetic Oil` leaves `Synthetic Oil 15W-40`.
+
+The validation notes are in
 [`docs/playwright-validation.md`](docs/playwright-validation.md).
