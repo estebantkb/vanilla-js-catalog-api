@@ -1,81 +1,68 @@
 # Playwright validation
 
-Playwright opens the application in a real browser and checks the result of
-the JavaScript code. The tests do not only read the original HTML: they wait
-for the page to load, interact with the search field, and inspect the updated
-page.
+I used Playwright to check the local product catalog in a browser. This was
+different from checking only the HTML file because the products are no longer
+stored in the frontend. The page requests them from Spring Boot, and Spring
+Boot reads them from PostgreSQL.
 
-The catalog has two small automated checks:
+## What I tested
 
-- The six product cards appear on `index.html`.
-- Searching for `Synthetic Oil` leaves one matching product.
+The first test opened `index.html` and checked the product cards after the
+page finished loading. Six cards appeared, which confirmed that the request
+from the frontend to the backend returned the catalog data.
 
-## Project files
+The second test entered `Synthetic Oil` in the search field. The frontend sent
+the search value to the backend, which returned the matching product. The
+page then showed one card with the name `Synthetic Oil 15W-40`.
 
-- `playwright.config.js` contains the test settings.
-- `tests/catalog.spec.js` contains the browser tests.
-- `package.json` defines the `npm run test:e2e` command.
+In the test code, `page` represents the browser page. `locator` finds elements
+such as `#grid` and `#searchInput`, while `expect` checks what is displayed
+after the browser interaction.
 
-## How the configuration works
+## How I ran the checks
 
-The configuration uses `tests` as the test folder and sets
-`http://127.0.0.1:8000` as the base URL. Before the tests run, Playwright
-starts the local server with:
-
-```bash
-python3 -m http.server 8000
-```
-
-This lets the tests open `/index.html` as a web page instead of opening the
-file directly from the computer.
-
-## How the tests work
-
-The first test opens the catalog:
-
-```js
-await page.goto("/index.html");
-```
-
-Then it finds the product cards inside `#grid` and checks that there are six:
-
-```js
-await expect(page.locator("#grid > div")).toHaveCount(6);
-```
-
-The cards are created by `js/catalog.js`, so this check confirms that the
-page loaded and the JavaScript rendered the products.
-
-The second test fills the search field:
-
-```js
-await page.locator("#searchInput").fill("Synthetic Oil");
-```
-
-The catalog code filters the products when the field changes. The test then
-checks that one card remains and that it contains the expected product name:
-
-```js
-await expect(page.locator("#grid > div")).toHaveCount(1);
-await expect(page.locator("#grid")).toContainText("Synthetic Oil 15W-40");
-```
-
-`page` represents the browser page, `locator` finds an element, and `expect`
-checks a result. The `await` statements make Playwright wait for each browser
-operation or assertion to finish.
-
-## Run the tests
-
-Install the dependencies:
+I started the PostgreSQL container first:
 
 ```bash
-npm install
+podman start catalog-postgres
 ```
 
-Run the tests:
+Then I started `CatalogBackendApplication` from IntelliJ. The backend was
+available at:
+
+```text
+http://localhost:8080
+```
+
+I checked the products directly through the API:
+
+```text
+http://localhost:8080/api/products
+http://localhost:8080/api/products?search=oil
+```
+
+The first URL returned the six products. The second returned
+`Synthetic Oil 15W-40`.
+
+The frontend was served locally at:
+
+```text
+http://localhost:8000/index.html
+```
+
+Finally, from the project folder, I ran:
 
 ```bash
 npm run test:e2e
 ```
 
-The tests start a local server on port `8000` automatically.
+The Playwright configuration started the frontend server on port `8000`. The
+Spring Boot application had to be running separately on port `8080`.
+
+## Result
+
+The two tests passed:
+
+```text
+2 passed
+```
