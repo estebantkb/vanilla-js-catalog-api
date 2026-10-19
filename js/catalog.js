@@ -1,44 +1,6 @@
-const products = [
-  {
-    name: "Teltonika FMB130",
-    image: "img/gps.jpg",
-    description: "Advanced GPS tracker with internal backup battery for commercial fleets.",
-    labels: ["GPS", "Hardware", "4G"]
-  },
-  {
-    name: "Air Filter X3000",
-    image: "img/air-filter.jpg",
-    description: "High-efficiency particulate air filter designed for heavy-duty diesel engines.",
-    labels: ["Engine", "Diesel", "OEM"]
-  },
-  {
-    name: "OBD-II Pro Scanner",
-    image: "img/obd.jpg",
-    description: "Full-system diagnostic tablet for reading real-time truck sensor metrics.",
-    labels: ["Diagnostics", "24V", "Tools"]
-  },
-  {
-    name: "LED Floodlight Bar",
-    image: "img/led.jpg",
-    description: "Waterproof IP68 high-lumen work light bar for night cargo operations.",
-    labels: ["Lighting", "IP68", "Exterior"]
-  },
-  {
-    name: "Synthetic Oil 15W-40",
-    image: "img/oil.jpg",
-    description: "Heavy-duty synthetic blend oil for thermal stability under high loads.",
-    labels: ["Lubricant", "15W-40", "Motor"]
-  },
-  {
-    name: "Brake Chamber T30",
-    image: "img/brake.jpg",
-    description: "Double diaphragm spring brake actuator for semi-trailers and heavy axles.",
-    labels: ["Brakes", "Safety", "Pneumatic"]
-  }
-];
-
 const grid = document.getElementById("grid");
 const searchInput = document.getElementById("searchInput");
+const apiUrl = "http://localhost:8080/api/products";
 
 const render = (list) => {
   grid.innerHTML = list.map(({ name, image, description, labels }) => `
@@ -57,14 +19,27 @@ const render = (list) => {
   `).join("");
 };
 
-searchInput.addEventListener("input", (e) => {
-  const query = e.target.value.toLowerCase().trim();
-  const filtered = products.filter(({ name, description, labels }) =>
-    name.toLowerCase().includes(query) ||
-    description.toLowerCase().includes(query) ||
-    labels.some((label) => label.toLowerCase().includes(query))
-  );
-  render(filtered);
+const loadProducts = async (search = "") => {
+  const url = search ? `${apiUrl}?search=${encodeURIComponent(search)}` : apiUrl;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error("Could not load products.");
+  }
+
+  const products = await response.json();
+  render(products.map((product) => ({
+    ...product,
+    labels: product.labels.split(",")
+  })));
+};
+
+searchInput.addEventListener("input", (event) => {
+  loadProducts(event.target.value.trim()).catch((error) => {
+    grid.innerHTML = `<p class="text-red-300">${error.message}</p>`;
+  });
 });
 
-render(products);
+loadProducts().catch((error) => {
+  grid.innerHTML = `<p class="text-red-300">${error.message}</p>`;
+});
